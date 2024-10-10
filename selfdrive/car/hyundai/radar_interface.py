@@ -14,7 +14,7 @@ RADAR_MSG_COUNT = 32
 def get_radar_can_parser(CP):
   if DBC[CP.carFingerprint]['radar'] is None:
     if CP.carFingerprint in CANFD_CAR:
-      if CP.spFlags & HyundaiFlags.CANFD_CAMERA_SCC:
+      if CP.Flags & HyundaiFlags.CANFD_CAMERA_SCC:
         lead_src, bus = "SCC_CONTROL", CanBus(CP).CAM
       else:
         return None

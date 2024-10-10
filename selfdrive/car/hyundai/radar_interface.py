@@ -33,8 +33,7 @@ class RadarInterface(RadarInterfaceBase):
     self.CP = CP
     self.camera_scc = CP.Flags & HyundaiFlags.CANFD_CAMERA_SCC
     self.updated_messages = set()
-    self.trigger_msg = 0x1A0 if self.camera_scc and CP.carFingerprint in CANFD_CAR else \
-                       (RADAR_START_ADDR + RADAR_MSG_COUNT - 1)
+    self.trigger_msg = 0x1A0 if self.camera_scc and CP.carFingerprint in CANFD_CAR else (RADAR_START_ADDR + RADAR_MSG_COUNT - 1)
     self.track_id = 0
 
     self.radar_off_can = CP.radarUnavailable
@@ -71,11 +70,10 @@ class RadarInterface(RadarInterfaceBase):
     ret.errors = errors
 
     if self.camera_scc:
-      msg_src = "SCC_CONTROL" if self.CP.carFingerprint in CANFD_CAR else \
+      msg_src = "SCC_CONTROL"
       msg = self.rcp.vl[msg_src]
       valid = msg['ACC_ObjStatus']
-      valid = msg['ACC_ObjDist'] < 204.6 if self.CP.carFingerprint in CANFD_CAR else \
-              msg['ACC_ObjStatus']
+      valid = msg['ACC_ObjDist'] < 204.6
       for ii in range(1):
         if valid:
           if ii not in self.pts:
@@ -84,7 +82,7 @@ class RadarInterface(RadarInterfaceBase):
             self.track_id += 1
           self.pts[ii].measured = True
           self.pts[ii].dRel = msg['ACC_ObjDist']
-          self.pts[ii].yRel = -msg['ACC_ObjLatPos']
+          self.pts[ii].yRel = float('nan')
           self.pts[ii].vRel = msg['ACC_ObjRelSpd']
           self.pts[ii].aRel = float('nan')
           self.pts[ii].yvRel = float('nan')

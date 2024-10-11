@@ -14,7 +14,7 @@ RADAR_MSG_COUNT = 32
 def get_radar_can_parser(CP):
   if DBC[CP.carFingerprint]['radar'] is None:
     if CP.carFingerprint in CANFD_CAR:
-      if CP.Flags & HyundaiFlags.CANFD_CAMERA_SCC:
+      if CP.flags & HyundaiFlags.CANFD_CAMERA_SCC:
         lead_src, bus = "SCC_CONTROL", CanBus(CP).CAM
       else:
         return None
@@ -31,9 +31,9 @@ class RadarInterface(RadarInterfaceBase):
   def __init__(self, CP):
     super().__init__(CP)
     self.CP = CP
-    self.camera_scc = CP.Flags & HyundaiFlags.CANFD_CAMERA_SCC
+    self.camera_scc = CP.flags & HyundaiFlags.CANFD_CAMERA_SCC
     self.updated_messages = set()
-    self.trigger_msg = 0x1A0 if self.camera_scc and CP.carFingerprint in CANFD_CAR else (RADAR_START_ADDR + RADAR_MSG_COUNT - 1)
+    self.trigger_msg = 0x1A0 if self.camera_scc else (RADAR_START_ADDR + RADAR_MSG_COUNT - 1)
     self.track_id = 0
 
     self.radar_off_can = CP.radarUnavailable

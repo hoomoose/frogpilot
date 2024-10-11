@@ -93,7 +93,7 @@ class Track:
     self.aLeadK = aLeadK
     self.aLeadTau = aLeadTau
 
-   def get_RadarState(self, CP: car.CarParams = None, lead_msg_y: float = 0.0, model_prob: float = 0.0):
+  def get_RadarState(self, CP: car.CarParams = None, lead_msg_y: float = 0.0, model_prob: float = 0.0):
     y_rel_vision = False if CP is None or CP.carName != "hyundai" else CP.flags & HyundaiFlags.CANFD_CAMERA_SCC
     return {
       "dRel": float(self.dRel),

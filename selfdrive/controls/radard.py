@@ -13,7 +13,6 @@ from openpilot.common.swaglog import cloudlog
 
 from openpilot.common.simple_kalman import KF1D
 from openpilot.selfdrive.car.hyundai.values import HyundaiFlags
-from openpilot.selfdrive.pandad import can_capnp_to_list
 
 from openpilot.selfdrive.frogpilot.frogpilot_variables import FrogPilotVariables
 
@@ -364,7 +363,7 @@ def main():
     pm = messaging.PubMaster(['radarState', 'liveTracks'])
     while 1:
       can_strings = messaging.drain_sock_raw(can_sock, wait_for_one=True)
-      rr = RI.update(can_capnp_to_list(can_strings))
+      rr = RI.update(can_strings)
       sm.update(0)
       if rr is None:
         continue

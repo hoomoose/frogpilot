@@ -72,7 +72,6 @@ class RadarInterface(RadarInterfaceBase):
     if self.camera_scc:
       msg_src = "SCC_CONTROL"
       msg = self.rcp.vl[msg_src]
-      valid = msg['ACC_ObjStatus']
       valid = msg['ACC_ObjDist'] < 204.6
       for ii in range(1):
         if valid:

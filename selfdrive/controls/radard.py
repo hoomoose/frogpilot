@@ -170,7 +170,7 @@ def get_RadarState_from_vision(lead_msg: capnp._DynamicStructReader, v_ego: floa
 
 
 def get_lead(v_ego: float, ready: bool, tracks: dict[int, Track], lead_msg: capnp._DynamicStructReader,
-             model_v_ego: float, CP: car.CarParams, low_speed_override: bool = True) -> dict[str, Any]:
+             model_v_ego: float, CP: car.CarParams,  lead_detection_threshold: float, low_speed_override: bool = True) -> dict[str, Any]:
   # Determine leads, this is where the essential logic happens
   if len(tracks) > 0 and ready and lead_msg.prob > lead_detection_threshold:
     track = match_vision_to_track(v_ego, lead_msg, tracks)
